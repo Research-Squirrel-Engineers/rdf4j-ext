@@ -1,0 +1,4 @@
+@prefix example: <http://example.org#> .
+
+example:Florian example:worksAs example:SoftwareEngineer.
+example:Florian example:worksAt example:RGZM.
