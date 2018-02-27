@@ -1,7 +1,5 @@
-package de.rgzm.foolib.config;
+package org.linkedgeodesy.rdf4jext.config;
 
-import de.rgzm.foolib.config.POM_foolib;
-import de.rgzm.foolib.config.FoolibProperties;
 import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -14,9 +12,9 @@ import static org.junit.Assert.*;
  * Testing Class
  * @author thiery
  */
-public class POM_foolibTest {
+public class POM_rdf4jextTest {
     
-    public POM_foolibTest() {
+    public POM_rdf4jextTest() {
     }
     
     @BeforeClass
@@ -38,14 +36,14 @@ public class POM_foolibTest {
     @Test
     public void testPOMInfoNotNull() throws Exception {
         System.out.println("testPOMInfoNotNull");
-        JSONObject info = POM_foolib.getInfo();
+        JSONObject info = POM_rdf4jext.getInfo();
         assertNotNull(info);
     }
     
     @Test
     public void testLoadPomInfoAndPackagingIsJAR() throws Exception {
         System.out.println("testLoadPomInfoAndPackagingIsJAR");
-        String packaging = FoolibProperties.getPropertyParam("packaging");
+        String packaging = RDF4JExtProperties.getPropertyParam("packaging");
         assertEquals("jar",packaging);
     }
     

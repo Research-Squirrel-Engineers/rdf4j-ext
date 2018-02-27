@@ -1,4 +1,4 @@
-package de.rgzm.foolib.log;
+package org.linkedgeodesy.rdf4jext.log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

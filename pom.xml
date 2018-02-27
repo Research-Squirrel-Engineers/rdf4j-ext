@@ -8,20 +8,18 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	
-	<artifactId>foolib</artifactId>
-	<!-- groupId: topLevelDomain.githubUserName.artifactId -->
-	<groupId>de.rgzm.foolib</groupId>
-	<!-- if not in 1.0 release set to 1.0-SNAPSHOT -->
+	<artifactId>rdf4jext</artifactId>
+	<groupId>org.linkedgeodesy.rdf4jext</groupId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	
-	<name>foo library</name>
-	<description>Demo for a JAR library on GitHub</description>
-	<url>https://github.com/rgzm/foolib.git</url>
+	<name>rdf4j extension library</name>
+	<description>An extension library for RDF4J and OpenRDF Sesame</description>
+	<url>https://github.com/linkedgeodesy/rdf4j-ext.git</url>
 	<licenses>
 		<license>
 			<name>MIT License</name>
-			<url>https://github.com/rgzm/foolib/blob/master/LICENSE</url>
+			<url>https://github.com/linkedgeodesy/rdf4j-ext/blob/master/LICENSE</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -30,7 +28,7 @@
 		<url>http://rgzm.de</url>
 	</organization>
 	<scm>
-		<connection>scm:git:https://github.com/rgzm/foolib.git</connection>
+		<connection>scm:git:https://github.com/linkedgeodesy/rdf4j-ext.git</connection>
 	</scm>
 	<developers>
 		<developer>
@@ -80,7 +78,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<configuration>
-					<mainClass>de.rgzm.foolib.run.Main</mainClass>
+					<mainClass>org.linkedgeodesy.rdf4jext.run.Main</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -111,17 +109,6 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>1.7.1</version>
-		</dependency>
-		<!-- postGIS -->
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901.jdbc3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.postgis</groupId>
-			<artifactId>postgis-jdbc</artifactId>
-			<version>1.3.3</version>
 		</dependency>
 	</dependencies>
 	

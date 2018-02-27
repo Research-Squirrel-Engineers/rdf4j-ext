@@ -1,4 +1,4 @@
-package de.rgzm.foolib.config;
+package org.linkedgeodesy.rdf4jext.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,10 +8,10 @@ import java.util.Properties;
  * Class for reading the pom.xml file
  * @author thiery
  */
-public class FoolibProperties {
+public class RDF4JExtProperties {
 
 	private static final Properties prop = new Properties();
-	private static final String fileName = "foolib.properties";
+	private static final String fileName = "rdf4jext.properties";
 
 	/**
      * load properties file
