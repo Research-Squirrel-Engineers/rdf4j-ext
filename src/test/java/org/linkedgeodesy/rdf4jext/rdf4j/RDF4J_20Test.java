@@ -104,12 +104,28 @@ public class RDF4J_20Test {
     public void testUpdate() throws Exception {
         System.out.println("test update triplestore");
         int before = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
-        String update = "INSERT DATA { <http://example.org#example:Allard> <http://example.org#worksAt> <http://example.org#RGZM>. }";
+        String update = "INSERT DATA { <http://example.org#Allard> <http://example.org#worksAt> <http://example.org#RGZM>. }";
         RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
         int after1 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
         assertNotSame(after1, before);
         System.out.println("test update triplestore input " + (after1 - before) + " line");
-        update = "DELETE DATA { <http://example.org#example:Allard> <http://example.org#worksAt> <http://example.org#RGZM>. }";
+        update = "DELETE DATA { <http://example.org#Allard> <http://example.org#worksAt> <http://example.org#RGZM>. }";
+        RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
+        int after2 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        assertEquals(after2, before);
+        System.out.println("test update triplestore deleted " + (after1 - after2) + " line");
+    }
+    
+    @Test
+    public void testInputFromJSONLD() throws Exception {
+        System.out.println("test update triplestore from JSONLD");
+        int before = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        String jsonld = "{ \"@id\": \"http://example.org#Florian\", \"@type\": \"http://example.org#Person\" }";
+        RDF4J_20.inputRDFfromJSONLDString("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", jsonld);
+        int after1 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        assertNotSame(after1, before);
+        System.out.println("test update triplestore input " + (after1 - before) + " line");
+        String update = "DELETE DATA { <http://example.org#Florian> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.org#Person>. }";
         RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
         int after2 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
         assertEquals(after2, before);
