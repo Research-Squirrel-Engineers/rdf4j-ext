@@ -22,6 +22,9 @@ public class RDF4J_20Test {
     public RDF4J_20Test() {
     }
 
+    private String repo = "rdf4j-ext";
+    private String server = "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server";
+
     @BeforeClass
     public static void setUpClass() {
     }
@@ -42,7 +45,7 @@ public class RDF4J_20Test {
     public void testQueryORDEREDLIST() throws Exception {
         System.out.println("test query triplestore ORDEREDLIST");
         String query = "SELECT * WHERE { ?s ?p ?o }";
-        List<BindingSet> result = RDF4J_20.SPARQLquery("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", query);
+        List<BindingSet> result = RDF4J_20.SPARQLquery(repo, server, query);
         List<String> s = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "s");
         List<String> p = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "p");
         List<String> o = RDF4J_20.getValuesFromBindingSet_ORDEREDLIST(result, "o");
@@ -85,7 +88,7 @@ public class RDF4J_20Test {
     public void testQueryUNIQUESET() throws Exception {
         System.out.println("test query triplestore UNIQUESET");
         String query = "SELECT * WHERE { ?s ?p ?o }";
-        List<BindingSet> result = RDF4J_20.SPARQLquery("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", query);
+        List<BindingSet> result = RDF4J_20.SPARQLquery(repo, server, query);
         HashSet<String> s = RDF4J_20.getValuesFromBindingSet_UNIQUESET(result, "s");
         HashSet<String> p = RDF4J_20.getValuesFromBindingSet_UNIQUESET(result, "p");
         HashSet<String> o = RDF4J_20.getValuesFromBindingSet_UNIQUESET(result, "o");
@@ -108,57 +111,57 @@ public class RDF4J_20Test {
     @Test
     public void testUpdate() throws Exception {
         System.out.println("test update triplestore");
-        int before = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        int before = RDF4J_20.getNumberOfStatements(repo, server);
         String update = "INSERT DATA { <http://example.org#Allard> <http://example.org#worksAt> <http://example.org#RGZM>. }";
-        RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
-        int after1 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        RDF4J_20.SPARQLupdate("rdf4j-ext", server, update);
+        int after1 = RDF4J_20.getNumberOfStatements(repo, server);
         assertNotSame(after1, before);
         System.out.println("test update triplestore input " + (after1 - before) + " line");
         update = "DELETE DATA { <http://example.org#Allard> <http://example.org#worksAt> <http://example.org#RGZM>. }";
-        RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
-        int after2 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        RDF4J_20.SPARQLupdate("rdf4j-ext", server, update);
+        int after2 = RDF4J_20.getNumberOfStatements(repo, server);
         assertEquals(after2, before);
         System.out.println("test update triplestore deleted " + (after1 - after2) + " line");
     }
-    
+
     @Test
     public void testInputFromJSONLD() throws Exception {
         System.out.println("test update triplestore from JSONLD");
-        int before = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        int before = RDF4J_20.getNumberOfStatements(repo, server);
         String jsonld = "{ \"@id\": \"http://example.org#Florian\", \"@type\": \"http://example.org#Person\" }";
-        RDF4J_20.inputRDFfromJSONLDString("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", jsonld);
-        int after1 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        RDF4J_20.inputRDFfromJSONLDString("rdf4j-ext", server, jsonld);
+        int after1 = RDF4J_20.getNumberOfStatements(repo, server);
         assertNotSame(after1, before);
         System.out.println("test update triplestore JSONLD input " + (after1 - before) + " line");
         String update = "DELETE DATA { <http://example.org#Florian> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.org#Person>. }";
-        RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
-        int after2 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        RDF4J_20.SPARQLupdate("rdf4j-ext", server, update);
+        int after2 = RDF4J_20.getNumberOfStatements(repo, server);
         assertEquals(after2, before);
         System.out.println("test update triplestore JSONLD deleted " + (after1 - after2) + " line");
     }
-    
+
     @Test
     public void testInputFromJSONRDF() throws Exception {
         System.out.println("test update triplestore from JSONRDF");
-        int before = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        int before = RDF4J_20.getNumberOfStatements(repo, server);
         String jsonrdf = "{ \"http://example.org#Florian\": { \"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\": [{ \"type\": \"uri\", \"value\": \"http://example.org#Person\" }] } }";
-        RDF4J_20.inputRDFfromRDFJSONString("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", jsonrdf);
-        int after1 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        RDF4J_20.inputRDFfromRDFJSONString("rdf4j-ext", server, jsonrdf);
+        int after1 = RDF4J_20.getNumberOfStatements(repo, server);
         assertNotSame(after1, before);
         System.out.println("test update triplestore JSONRDF input " + (after1 - before) + " line");
         String update = "DELETE DATA { <http://example.org#Florian> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.org#Person>. }";
-        RDF4J_20.SPARQLupdate("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", update);
-        int after2 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
+        RDF4J_20.SPARQLupdate("rdf4j-ext", server, update);
+        int after2 = RDF4J_20.getNumberOfStatements(repo, server);
         assertEquals(after2, before);
         System.out.println("test update triplestore JSONRDF deleted " + (after1 - after2) + " line");
     }
-    
+
     @Test
     public void testJSONOutputStream() throws Exception {
         System.out.println("test JSON output triplestore as OutputStream");
         OutputStream os = new ByteArrayOutputStream();
         String query = "SELECT * WHERE { ?s ?p ?o }";
-        os = RDF4J_20.SPARQLqueryOutputFileOS("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", query, "JSON", os);
+        os = RDF4J_20.SPARQLqueryOutputFileOS(repo, server, query, "JSON", os);
         JSONObject json = (JSONObject) new JSONParser().parse(os.toString());
         JSONObject head = (JSONObject) json.get("head");
         JSONArray vars = (JSONArray) head.get("vars");
