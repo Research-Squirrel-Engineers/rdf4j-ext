@@ -2,3 +2,10 @@
 
 example:Florian example:worksAs example:SoftwareEngineer.
 example:Florian example:worksAt example:RGZM.
+example:Florian example:hasAge "31"^^<http://www.w3.org/2001/XMLSchema#integer>.
+example:Florian example:hasSize "1.61"^^<http://www.w3.org/2001/XMLSchema#double>.
+example:Florian example:hasName "Florian Thiery"^^<http://www.w3.org/2001/XMLSchema#string>.
+example:Florian example:speaks "deutsch"@de.
+example:Florian example:hasMail <mailto:thiery@rgzm.de>.
+example:Florian example:hasWebsite <https://linkedgeodesy.org>.
+example:Florian example:hasHomepage <http://florian-thiery.de>.
