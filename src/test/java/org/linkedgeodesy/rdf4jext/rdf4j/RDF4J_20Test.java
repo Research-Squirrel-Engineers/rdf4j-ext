@@ -1,8 +1,13 @@
 package org.linkedgeodesy.rdf4jext.rdf4j;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.List;
 import org.eclipse.rdf4j.query.BindingSet;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -146,6 +151,21 @@ public class RDF4J_20Test {
         int after2 = RDF4J_20.getNumberOfStatements("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server");
         assertEquals(after2, before);
         System.out.println("test update triplestore JSONRDF deleted " + (after1 - after2) + " line");
+    }
+    
+    @Test
+    public void testJSONOutputStream() throws Exception {
+        System.out.println("test JSON output triplestore as OutputStream");
+        OutputStream os = new ByteArrayOutputStream();
+        String query = "SELECT * WHERE { ?s ?p ?o }";
+        os = RDF4J_20.SPARQLqueryOutputFileOS("rdf4j-ext", "http://ls-dev.i3mainz.hs-mainz.de/rdf4j-server", query, "JSON", os);
+        JSONObject json = (JSONObject) new JSONParser().parse(os.toString());
+        JSONObject head = (JSONObject) json.get("head");
+        JSONArray vars = (JSONArray) head.get("vars");
+        JSONObject results = (JSONObject) json.get("results");
+        JSONArray bindings = (JSONArray) results.get("bindings");
+        assertEquals(3, vars.size());
+        assertEquals(9, bindings.size());
     }
 
 }
